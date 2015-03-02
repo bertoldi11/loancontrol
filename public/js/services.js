@@ -1,3 +1,7 @@
-/**
- * Created by Print4me on 02/03/2015.
- */
+'use strict';
+
+/* Services */
+
+var loanControlService = angular.module('loanControlService', ['ngResource']);
+
+loanControlService.factory();
