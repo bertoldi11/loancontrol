@@ -2,4 +2,4 @@
 
 /* Controllers */
 
-var loanControlControllers = angular.module('loanControlControllers', [])
+var loanControlControllers = angular.module('loanControlControllers', []);
