@@ -4,18 +4,14 @@
 
 var loanControlControllers = angular.module('loanControlControllers', []);
 
-loanControlControllers.controller('AutorsAllController', ['$scope',
-    function($scope){
-        $scope.autors = [
-            {'idAutor':1, 'nome': 'Fernando Sabino', 'email': 'fernando@sabino.com.br'},
-            {'idAutor':2, 'nome': 'Sun Tzu', 'email': 'sun@tzu.com.br'},
-            {'idAutor':3, 'nome': 'Agatha Christie', 'email': 'agata@cristie.com.br'},
-        ];
+loanControlControllers.controller('AutorsAllController', ['$scope','Autors',
+    function($scope, Autors){
+        $scope.autors = Autors.query();
 }]);
 
-loanControlControllers.controller('AutorListOneController', ['$scope',
-    function($scope){
+loanControlControllers.controller('AutorListOneController', ['$scope','Autors',
+    function($scope, Autors){
         $scope.salvar = function(){
-            alert('Vai Salvar');
+            Autors.post({"idAutor": 1});
         };
 }]);
