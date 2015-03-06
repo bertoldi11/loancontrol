@@ -1,3 +1,5 @@
 .idea/
 public/bower_components
 source/node_modules
+
+npm-debug.log

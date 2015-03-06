@@ -8,5 +8,5 @@ de itens.
 - Os arquivos do Node ficam dentro de /source
 - Os arquivos do Angular ficam dentro de /public
 - As dependências do projeto Angular estão em /public/bower.json
-- As dependências do Projeto Node estão em <<verificar existencia de arquivo npm>>
+- As dependências do Projeto Node estão em /source/package.json
 

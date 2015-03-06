@@ -1,6 +1,18 @@
 {
+  "name": "Loan Control (controle de empréstimos)",
+  "version": "1.0.0",
+  "description": "Sistema para controle de empréstimo de livros.",
+  "author": "Vinícius Bertoldi (bertoldi11@gmail.com)",
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/bertoldi11/loancontrol"
+  },
+  "bugs":{
+    "url": "https://github.com/bertoldi11/loancontrol/issues"
+  },
   "dependencies": {
     "express": "4.2.x",
-    "cors":"2.5.3"
+    "cors":"2.5.3",
+    "mongoose": ">=3.8"
   }
 }
