@@ -4,11 +4,10 @@
     </div>
 
     <div class="col-md-12">
-        <form class="form-inline">
-            <input type="text" placeholder="Nome do Autor" name="autor[nome]" ng-model="nome" id="autorNome" class="form-control" />
-            <input type="text" placeholder="Email do Autor" name="autor[email]" ng-model="email" id="emailAutor" class="form-control" />
+        <form class="form-inline" name="formNovoAutor">
+            <input type="text" placeholder="Nome do Autor"  ng-model="autor.nome"  class="form-control" required="" />
+            <input type="text" placeholder="Email do Autor"  ng-model="autor.email"  class="form-control" required="" />
             <button ng-click="salvar()" class="btn btn-primary">Salvar</button>
         </form>
     </div>
-    {{idAutor}}
 </div>

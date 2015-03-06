@@ -12,6 +12,8 @@ loanControlControllers.controller('AutorsAllController', ['$scope','Autors',
 loanControlControllers.controller('AutorListOneController', ['$scope','Autors',
     function($scope, Autors){
         $scope.salvar = function(){
-            Autors.post({"idAutor": 1});
+            Autors.save($scope.autor, function(autor){
+                console.log(autor);
+            });
         };
 }]);

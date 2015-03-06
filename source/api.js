@@ -1,8 +1,11 @@
 var express = require('express');
-var app = express();
-
 var cors = require('cors');
+var bodyParser = require('body-parser');
+
+var app = express();
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 var objRetorno = [
     {"idAutor":"1", "nome": "Fernando Sabino", "email": "fernando@sabino.com.br"},
@@ -23,8 +26,8 @@ app.get('/autors', function(req, res){
 
 app.post('/autors', function(req, res){
     console.log('Salvou Autor');
-    console.log(req);
-    res.json({ "idAutor": req.get('id')});
+    console.log(req.body);
+    res.json({ "nome": req.body.nome, "email": req.body.email});
 });
 
 app.listen(process.env.PORT || 3000);

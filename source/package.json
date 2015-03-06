@@ -1,5 +1,5 @@
 {
-  "name": "Loan Control (controle de empréstimos)",
+  "name": "loancontrol",
   "version": "1.0.0",
   "description": "Sistema para controle de empréstimo de livros.",
   "author": "Vinícius Bertoldi (bertoldi11@gmail.com)",
@@ -13,6 +13,7 @@
   "dependencies": {
     "express": "4.2.x",
     "cors":"2.5.3",
-    "mongoose": ">=3.8"
+    "mongoose": "3.8",
+    "body-parser": "1.0.1"
   }
 }
