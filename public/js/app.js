@@ -11,12 +11,20 @@ loanControlApp.config(['$routeProvider',
                 templateUrl: 'partials/autors/listAll.html',
                 controller: 'AutorsAllController'
             }).
-            when('/autors/:autorId', {
-                templateUrl: 'partials/autors/save.html',
+            when('/autor/novo', {
+                templateUrl: 'partials/autors/details.html',
+                controller: 'AutorNewController'
+            }).
+            when('/autor/:autorId', {
+                templateUrl: 'partials/autors/details.html',
                 controller: 'AutorListOneController'
             }).
+            when('/home', {
+                templateUrl: 'partials/autors/listAll.html',
+                controller: 'AutorsAllController'
+            }).
             otherwise({
-                redirectTo: '/'
+                redirectTo: '/home'
             })
     }
 ]);

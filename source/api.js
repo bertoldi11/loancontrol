@@ -24,10 +24,16 @@ app.get('/autors', function(req, res){
     res.json(objRetorno);
 });
 
-app.post('/autors', function(req, res){
+app.post('/autor', function(req, res){
     console.log('Salvou Autor');
     console.log(req.body);
     res.json({ "nome": req.body.nome, "email": req.body.email});
+});
+
+
+app.get('/autor', function (req, res){
+    console.log('Listou Autor')
+    res.json({ "nome": 'Fernando Sabino', "email": 'fernando@sabino.com.br'});
 });
 
 app.listen(process.env.PORT || 3000);

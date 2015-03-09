@@ -9,3 +9,9 @@ loanControlService.factory('Autors', ['$resource',
          return $resource('http://192.168.56.100:3000/autors');
     }
 ]);
+
+loanControlService.factory('Autor', ['$resource',
+    function($resource){
+        return $resource('http://192.168.56.100:3000/autor');
+    }
+]);
