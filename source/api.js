@@ -1,8 +1,23 @@
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-
+var mongoose = require('mongoose');
+var db = mongoose.conection;
 var app = express();
+
+mongoose.connect('mongodb://localhost/loan');
+db.on('error', console.error.bind(console, 'connection erro: '));
+db.once('open', function(){
+    console.log('Conectou ao DB Loan');
+});
+
+var autorSchema = mongoose.Schema({
+    nome: string,
+    email: string
+});
+
+var Autor = mongoose.model('Autor', autorSchema);
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
