@@ -17,31 +17,34 @@ loanControlControllers.controller('AutorsAllController', ['$scope','Autors','Aut
         };
 
         $scope.delete = function(idAutor){
-            Autor.delete({idAutor: idAutor});
-            $scope.autors = Autors.query();
+            Autor.delete({_id: idAutor}, function(){
+                $scope.autors = Autors.query();
+            });
         }
     }]);
 
-loanControlControllers.controller('AutorListOneController', ['$scope','$routeParams','Autor',
-    function($scope, $routeParams, Autor){
-        $scope.autor = Autor.get({idAutor: $routeParams.autorId});
+loanControlControllers.controller('AutorListOneController', ['$scope','$routeParams','Autor','$location',
+    function($scope, $routeParams, Autor, $location){
+        $scope.autor = Autor.get({_id: $routeParams.autorId});
 
         $scope.titlePage = 'Editando Autor';
 
         $scope.salvar = function(){
             Autor.save($scope.autor, function(autor){
                 console.log(autor);
+                $location.path('autors')
             });
         };
     }]);
 
-loanControlControllers.controller('AutorNewController', ['$scope','Autor',
-    function($scope, Autor){
+loanControlControllers.controller('AutorNewController', ['$scope','Autor','$location',
+    function($scope, Autor, $location){
         $scope.titlePage = 'Cadastrando Autor';
 
         $scope.salvar = function(){
             Autor.save($scope.autor, function(autor){
                 console.log(autor);
+                $location.path('autors')
             });
         };
     }]);
