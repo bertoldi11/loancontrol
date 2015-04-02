@@ -37,47 +37,48 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res){
-    console.log('Entrou na raiz');
-    res.json(objRetorno);
+    res.json({msg: 'Página não encontrada'});
 });
 
-app.get('/autors', function(req, res){
-    AutorsModel.find(function(err, autors){
+/**
+ * Api com resposta dos autores.
+ */
+app.put('/autor', function(req, res){
+    AutorsModel.findOneAndUpdate({_id: req.body._id}, {nome: req.body.nome, email:  req.body.email}, {}, function(err, autor){
         if(err) return console.log(err);
-        res.json(autors);
+        if(autor) res.json(autor);
+
+        res.json({erro: true, msg: 'Mensagem: Erro ao editar autor'});
     });
 });
 
 app.post('/autor', function(req, res){
-    if(req.body._id){
-        AutorsModel.findOneAndUpdate({_id: req.body._id}, {nome: req.body.nome, email:  req.body.email}, {}, function(err, autor){
+    var autor = new AutorsModel({
+        nome: req.body.nome,
+        email:  req.body.email
+    });
+
+    autor.save(function(err, autor){
+        if(err) return console.log(err);
+        res.json(autor);
+    });
+});
+
+app.get('/autor/:idAutor', function (req, res){
+    if(req.param('idAutor') == 'all'){
+        AutorsModel.find(function(err, autors){
             if(err) return console.log(err);
-            if(autor) res.json(autor);
-
-            res.json({erro: true, msg: 'Mensagem: Erro ao editar autor'});
+            res.json(autors);
         });
-    } else{
-        var autor = new AutorsModel({
-            nome: req.body.nome,
-            email:  req.body.email
-        });
-
-        autor.save(function(err, autor){
+    } else {
+        AutorsModel.findOne({_id:  req.param('idAutor')}, function(err, autor){
             if(err) return console.log(err);
             res.json(autor);
         });
     }
 });
 
-app.get('/autor', function (req, res){
-    AutorsModel.findOne({_id:  req.query._id}, function(err, autor){
-        if(err) return console.log(err);
-        res.json(autor);
-    });
-});
-
 app.delete('/autor', function(req, res){
-    console.log(req.query);
     AutorsModel.findByIdAndRemove(req.query._id, function(err, autor){
         if(err) return console.log(err);
         if(autor) res.json(autor);

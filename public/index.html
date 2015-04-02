@@ -23,8 +23,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"> Loan Control</a>
-                <p class="navbar-text navbar-right">Texto alinhado a direita <a href="#" class="navbar-link">Click Aqui</a></p>
+                <a class="navbar-brand" href="#/home"> Loan Control</a>
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Autor <span class="caret"></span></a>
@@ -37,18 +36,18 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Editora <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#/editor/details">Novo</a></li>
-                            <li><a href="#/editor">Ver Todos</a></li>
+                            <li><a href="#/editora/novo">Novo</a></li>
+                            <li><a href="#/editoras">Ver Todos</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container-fluid" style="margin-top: 60px;">
+    <div class="container" style="margin-top: 60px;">
         <div class="row">
             <ol class="breadcrumb">
-                <li class="active"><a href="#">Home</a></li>
+                <li ng-repeat="breadCrumb in breadCrumbs" ng-class="{'active': breadCrumbs.active}"><a href="{{breadCrumb.link}}">{{breadCrumb.text}}</a></li>
             </ol>
             <div ng-view ></div>
         </div>

@@ -19,9 +19,21 @@ loanControlApp.config(['$routeProvider',
                 templateUrl: 'partials/autors/details.html',
                 controller: 'AutorsController'
             }).
+            when('/editoras',{
+                templateUrl: 'partials/publishing/listAll.html',
+                controller: 'PublishingController'
+            }).
+            when('/editora/nova',{
+                templateUrl: 'partials/publishing/details.html',
+                controller: 'PublishingController'
+            }).
+            when('/editora/:editoraId',{
+                templateUrl: 'partials/publishing/details.html',
+                controller: 'PublishingController'
+            }).
             when('/home', {
-                templateUrl: 'partials/autors/listAll.html',
-                controller: 'AutorsController'
+                templateUrl: 'partials/home.html',
+                controller: 'HomeController'
             }).
             otherwise({
                 redirectTo: '/home'

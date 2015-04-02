@@ -1,0 +1,36 @@
+<h1>Listagem das Editoras</h1>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Editoras</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Site</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="publish in publishings">
+                            <td>{{publishings._id}}</td>
+                            <td>{{publishings.nome}}</td>
+                            <td>{{publishings.email}}</td>
+                            <td>{{publishings.telefone}}</td>
+                            <td>{{publishings.site}}</td>
+                            <td>
+                                <a ng-click="edit(publishings._id)" class="btn btn-primary btn-small"><i class="fa fa-edit"></i></a>
+                                <a ng-click="delete(publishings._id)" class="btn btn-danger btn-small"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
