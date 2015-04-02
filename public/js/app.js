@@ -9,19 +9,19 @@ loanControlApp.config(['$routeProvider',
         $routeProvider.
             when('/autors', {
                 templateUrl: 'partials/autors/listAll.html',
-                controller: 'AutorsAllController'
+                controller: 'AutorsController'
             }).
             when('/autor/novo', {
                 templateUrl: 'partials/autors/details.html',
-                controller: 'AutorNewController'
+                controller: 'AutorsController'
             }).
             when('/autor/:autorId', {
                 templateUrl: 'partials/autors/details.html',
-                controller: 'AutorListOneController'
+                controller: 'AutorsController'
             }).
             when('/home', {
                 templateUrl: 'partials/autors/listAll.html',
-                controller: 'AutorsAllController'
+                controller: 'AutorsController'
             }).
             otherwise({
                 redirectTo: '/home'

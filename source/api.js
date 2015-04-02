@@ -11,12 +11,26 @@ db.once('open', function(){
     console.log('Conectou ao DB Loan');
 });
 
+/**
+ * Esquema de Autores
+ */
 var autorSchema = mongoose.Schema({
     nome: String,
     email: String
 });
 
+/**
+ * Esquema de Editoras
+ */
+var publishingSchema = mongoose.Schema({
+    nome: String,
+    email: String,
+    telefone: String,
+    site: String
+});
+
 var AutorsModel = mongoose.model('Autor', autorSchema);
+var EditoraModel = mongoose.model('Publishing', publishingSchema);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
