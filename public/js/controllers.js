@@ -61,9 +61,9 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                 }
             };
     }]).
-    controller('PublishingController', ['$scope','Publishings','$rootScope','$routeParams',
-        function($scope, Publishings, $rootScope, $routeParams) {
-            $scope.editora = {};
+    controller('PublishingController', ['$scope','Publishings','$rootScope','$routeParams','$location',
+        function($scope, Publishings, $rootScope, $routeParams, $location) {
+            $scope.publishing = {};
             $scope.titlePage = 'Cadastrar Nova Editora';
 
             $rootScope.breadCrumbs = [
@@ -73,7 +73,7 @@ var loanControlControllers = angular.module('loanControlControllers', []).
 
             if ($routeParams.editoraId) {
                 $scope.titlePage = 'Editando Editora';
-                $scope.publishing = Publishings.get({idEditora: $routeParams.editoraId}, function () {
+                $scope.publishing = Publishings.get({idPublishing: $routeParams.editoraId}, function () {
                     $rootScope.breadCrumbs = [
                         {text: 'Home', link: '#/home', active: false},
                         {text: 'Editoras', link: '#/editoras', active: false},
@@ -81,5 +81,36 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                     ];
                 });
             }
+
+            $scope.publishings = Publishings.query();
+
+            $scope.edit = function(idEditora){
+                $location.path('/editora/' + idEditora);
+            };
+
+            $scope.create = function(){
+                $location.path('editora/nova');
+            };
+
+            $scope.delete = function(idEditora){
+                if(confirm('Deseja Excluir essa Editora?')){
+                    Publishings.delete({_id: idEditora}, function(){
+                        $scope.publishings = Publishings.query();
+                    });
+                }
+            };
+
+            $scope.salvar = function(){
+                if($scope.publishing._id){
+                    Publishings.update($scope.publishing, function( publishing ){
+                        console.log(publishing);
+                        $location.path('editoras');
+                    });
+                } else {
+                    Publishings.save($scope.publishing, function( publishing ){
+                        console.log(publishing);
+                        $location.path('editoras');
+                    });
+                }
+            };
     }]);
-  

@@ -30,7 +30,7 @@ var publishingSchema = mongoose.Schema({
 });
 
 var AutorsModel = mongoose.model('Autor', autorSchema);
-var EditoraModel = mongoose.model('Publishing', publishingSchema);
+var PublishingModel = mongoose.model('Publishing', publishingSchema);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -83,6 +83,57 @@ app.delete('/autor', function(req, res){
         if(err) return console.log(err);
         if(autor) res.json(autor);
         res.json({erro: true, msg: 'Mensagem: Erro ao apagar autor'});
+    });
+});
+
+/**
+ * API com resposta para Editoras
+ */
+app.put('/publishing', function(req, res){
+    PublishingModel.findOneAndUpdate({_id: req.body._id}, {nome: req.body.nome, email:  req.body.email, telefone: req.body.telefone, site: req.body.site},
+        {},
+        function(err, publishing){
+            if(err) return console.log(err);
+            if(publishing) res.json(publishing);
+
+            res.json({erro: true, msg: 'Mensagem: Erro ao editar Editora'});
+    });
+});
+
+app.post('/publishing', function(req, res){
+    var publishing = new PublishingModel({
+        nome: req.body.nome,
+        email:  req.body.email,
+        telefone: req.body.telefone,
+        site: req.body.site
+    });
+
+    publishing.save(function(err, publishing){
+        if(err) return console.log(err);
+        res.json(publishing);
+    });
+});
+
+app.get('/publishing/:idEditora', function (req, res){
+    if(req.param('idEditora') == 'all'){
+        PublishingModel.find(function(err, publishing){
+            console.log(publishing);
+            if(err) return console.log(err);
+            res.json(publishing);
+        });
+    } else {
+        PublishingModel.findOne({_id:  req.param('idEditora')}, function(err, publishing){
+            if(err) return console.log(err);
+            res.json(publishing);
+        });
+    }
+});
+
+app.delete('/publishing', function(req, res){
+    PublishingModel.findByIdAndRemove(req.query._id, function(err, publishing){
+        if(err) return console.log(err);
+        if(publishing) res.json(publishing);
+        res.json({erro: true, msg: 'Mensagem: Erro ao apagar editora'});
     });
 });
 

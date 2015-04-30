@@ -18,14 +18,14 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="publish in publishings">
-                            <td>{{publishings._id}}</td>
-                            <td>{{publishings.nome}}</td>
-                            <td>{{publishings.email}}</td>
-                            <td>{{publishings.telefone}}</td>
-                            <td>{{publishings.site}}</td>
+                            <td>{{publish._id}}</td>
+                            <td>{{publish.nome}}</td>
+                            <td>{{publish.email}}</td>
+                            <td>{{publish.telefone}}</td>
+                            <td>{{publish.site}}</td>
                             <td>
-                                <a ng-click="edit(publishings._id)" class="btn btn-primary btn-small"><i class="fa fa-edit"></i></a>
-                                <a ng-click="delete(publishings._id)" class="btn btn-danger btn-small"><i class="fa fa-times"></i></a>
+                                <a ng-click="edit(publish._id)" class="btn btn-primary btn-small"><i class="fa fa-edit"></i></a>
+                                <a ng-click="delete(publish._id)" class="btn btn-danger btn-small"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                     </tbody>
