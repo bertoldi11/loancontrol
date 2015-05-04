@@ -1,4 +1,15 @@
-<h1>Listagem das Editoras</h1>
+<div class="row">
+    <div class="col-md-8">
+        <h1>Listagem das Editoras</h1>
+    </div>
+    <div class="col-md-4">
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="Busca" ng-model="busca">
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -17,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="publish in publishings">
+                        <tr ng-repeat="publish in publishings | filter: busca">
                             <td>{{publish._id}}</td>
                             <td>{{publish.nome}}</td>
                             <td>{{publish.email}}</td>
