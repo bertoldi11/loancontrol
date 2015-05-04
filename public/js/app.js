@@ -7,6 +7,18 @@ var loanControlApp = angular.module('loanControlApp', ['ngRoute', 'loanControlCo
 loanControlApp.config(['$routeProvider',
     function($routeProvider){
         $routeProvider.
+            when('/livros', {
+                templateUrl: 'partials/books/listAll.html',
+                controller: 'BookController'
+            }).
+            when('/livros/novo', {
+                templateUrl: 'partials/books/details.html',
+                controller: 'BookController'
+            }).
+            when('/livros/:bookId', {
+                templateUrl: 'partials/books/details.html',
+                controller: 'BookController'
+            }).
             when('/pessoas', {
                 templateUrl: 'partials/person/listAll.html',
                 controller: 'PersonController'

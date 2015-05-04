@@ -8,8 +8,8 @@ var loanControlControllers = angular.module('loanControlControllers', []).
             {text: 'Home', link: '/home', active: true}
         ];
     }]).
-    controller('AutorsController', ['$scope','Autors', '$location','$routeParams','$rootScope',
-        function($scope, Autors, $location, $routeParams, $rootScope){
+    controller('AutorsController', ['$scope','Authors', '$location','$routeParams','$rootScope',
+        function($scope, Authors, $location, $routeParams, $rootScope){
             $scope.autor = {};
             $scope.titlePage = 'Cadastrar Novo Autor';
 
@@ -20,7 +20,7 @@ var loanControlControllers = angular.module('loanControlControllers', []).
 
             if($routeParams.autorId){
                 $scope.titlePage = 'Editando Autor';
-                $scope.autor = Autors.get({idAutor: $routeParams.autorId}, function(){
+                $scope.autor = Authors.get({idAutor: $routeParams.autorId}, function(){
                     $rootScope.breadCrumbs = [
                         {text: 'Home', link: '#/home', active: false},
                         {text: 'Autores', link: '#/autors', active: false},
@@ -29,7 +29,7 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                 });
             }
 
-            $scope.autors = Autors.query();
+            $scope.autors = Authors.query();
 
             $scope.edit = function(idAutor){
                 $location.path('/autor/' + idAutor)
@@ -38,20 +38,18 @@ var loanControlControllers = angular.module('loanControlControllers', []).
             $scope.delete = function(idAutor){
                 if(confirm('Deseja Excluir esse Autors?')){
                     Autors.delete({_id: idAutor}, function(){
-                        $scope.autors = Autors.query();
+                        $scope.autors = Authors.query();
                     });
                 }
             }
 
             $scope.salvar = function(){
                 if($scope.autor._id){
-                    Autors.update($scope.autor, function(autor){
-                        console.log(autor);
+                    Authors.update($scope.autor, function(){
                         $location.path('autors')
                     });
                 } else {
-                    Autors.save($scope.autor, function(autor){
-                        console.log(autor);
+                    Authors.save($scope.autor, function(){
                         $location.path('autors')
                     });
                 }
@@ -94,13 +92,11 @@ var loanControlControllers = angular.module('loanControlControllers', []).
 
             $scope.salvar = function(){
                 if($scope.publishing._id){
-                    Publishings.update($scope.publishing, function( publishing ){
-                        console.log(publishing);
+                    Publishings.update($scope.publishing, function(){
                         $location.path('editoras');
                     });
                 } else {
-                    Publishings.save($scope.publishing, function( publishing ){
-                        console.log(publishing);
+                    Publishings.save($scope.publishing, function(){
                         $location.path('editoras');
                     });
                 }
@@ -143,15 +139,21 @@ var loanControlControllers = angular.module('loanControlControllers', []).
 
             $scope.salvar = function(){
                 if($scope.person._id){
-                    Person.update($scope.person, function( person ){
-                        console.log(person);
+                    Person.update($scope.person, function(){
                         $location.path('pessoas');
                     });
                 } else {
-                    Person.save($scope.person, function( person ){
-                        console.log(person);
+                    Person.save($scope.person, function(){
                         $location.path('pessoas');
                     });
                 }
             };
+    }]).
+    controller('BookController',['$scope','Book','$rootScope','$routeParams','$location',
+        function($scope, Book, $rootScope, $routeParams, $location){
+            $scope.book = {};
+            $scope.titlePage = 'Cadastrar novo Livro';
+
+
+
     }]);

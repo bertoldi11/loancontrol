@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>{{titlePage}}</h1>
+    </div>
+
+    <div class="col-md-12">
+        <form class="form-inline" name="formNovoLivro">
+            <input type="text" placeholder="Nome do Livro"  ng-model="book.nome"  class="form-control" required="" />
+            <button ng-click="salvar()" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+</div>

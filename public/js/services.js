@@ -3,7 +3,7 @@
 /* Services */
 
 var loanControlService = angular.module('loanControlService', ['ngResource']).
-    factory('Autors', ['$resource',
+    factory('Authors', ['$resource',
         function($resource){
             return $resource('http://192.168.56.100:3000/autor/:idAutor', {}, {
                 update: {method: 'PUT'},
@@ -22,5 +22,12 @@ var loanControlService = angular.module('loanControlService', ['ngResource']).
             return $resource('http://192.168.56.100:3000/person/:idPerson', {}, {
                 update: {method: 'PUT'},
                 query: {method: 'GET', params: {'idPerson': 'all'}, isArray: true}
+            });
+    }]).
+    factory('Book', ['$resource',
+        function($resource){
+            return $resource('http://192.168.56.100:3000/book/:idBook', {}, {
+                update: {method: 'PUT'},
+                query: {method: 'GET', params: {'idBook': 'all'}, isArray: true}
             });
     }]);
