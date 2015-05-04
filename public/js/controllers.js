@@ -136,7 +136,7 @@ var loanControlControllers = angular.module('loanControlControllers', []).
             $scope.delete = function(idPessoa){
                 if(confirm('Deseja Excluir essa Pessoa?')){
                     Person.delete({_id: idPessoa}, function(){
-                        $scope.people = Publishings.query();
+                        $scope.people = Person.query();
                     });
                 }
             };

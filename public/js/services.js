@@ -19,7 +19,7 @@ var loanControlService = angular.module('loanControlService', ['ngResource']).
     }]).
     factory('Person', ['$resource',
         function($resource){
-            return $resource('http://192.168.56.100:3000/Person/:idPerson', {}, {
+            return $resource('http://192.168.56.100:3000/person/:idPerson', {}, {
                 update: {method: 'PUT'},
                 query: {method: 'GET', params: {'idPerson': 'all'}, isArray: true}
             });

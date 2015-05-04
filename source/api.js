@@ -29,8 +29,19 @@ var publishingSchema = mongoose.Schema({
     site: String
 });
 
+/**
+ * Esquema das Pessoas
+ */
+
+var personSchema = mongoose.Schema({
+    nome: String,
+    email: String,
+    telefone: String
+});
+
 var AutorsModel = mongoose.model('Autor', autorSchema);
 var PublishingModel = mongoose.model('Publishing', publishingSchema);
+var PersonModel = mongoose.model('Person',personSchema );
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -134,6 +145,58 @@ app.delete('/publishing', function(req, res){
         if(err) return console.log(err);
         if(publishing) res.json(publishing);
         res.json({erro: true, msg: 'Mensagem: Erro ao apagar editora'});
+    });
+});
+
+
+/**
+ * API com resposta de pessoas
+ */
+
+app.put('/person', function(req, res){
+    PersonModel.findOneAndUpdate({_id: req.body._id}, {nome: req.body.nome, email:  req.body.email, telefone: req.body.telefone},
+        {},
+        function(err, person){
+            if(err) return console.log(err);
+            if(person) res.json(person);
+
+            res.json({erro: true, msg: 'Mensagem: Erro ao editar Pessoa'});
+        });
+});
+
+app.post('/person', function(req, res){
+    var person = new PersonModel({
+        nome: req.body.nome,
+        email:  req.body.email,
+        telefone: req.body.telefone
+    });
+
+    person.save(function(err, person){
+        if(err) return console.log(err);
+        res.json(person);
+    });
+});
+
+app.get('/person/:idPerson', function (req, res){
+    if(req.param('idPerson') == 'all'){
+        PersonModel.find(function(err, person){
+            console.log(person);
+            if(err) return console.log(err);
+            res.json(person);
+        });
+    } else {
+        PersonModel.findOne({_id:  req.param('idPerson')}, function(err, person){
+            if(err) return console.log(err);
+            res.json(person);
+        });
+    }
+});
+
+app.delete('/person', function(req, res){
+    PersonModel.findByIdAndRemove(req.query._id, function(err, person){
+        if(err) return console.log(err);
+        if(person) res.json(person);
+        res.json({erro: true, msg: 'Mensagem: Erro ao apagar Pessoa'});
     });
 });
 
