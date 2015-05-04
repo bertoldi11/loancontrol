@@ -35,10 +35,6 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                 $location.path('/autor/' + idAutor)
             };
 
-            $scope.create = function(){
-                $location.path('autor/novo');
-            };
-
             $scope.delete = function(idAutor){
                 if(confirm('Deseja Excluir esse Autors?')){
                     Autors.delete({_id: idAutor}, function(){
@@ -88,10 +84,6 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                 $location.path('/editora/' + idEditora);
             };
 
-            $scope.create = function(){
-                $location.path('editora/nova');
-            };
-
             $scope.delete = function(idEditora){
                 if(confirm('Deseja Excluir essa Editora?')){
                     Publishings.delete({_id: idEditora}, function(){
@@ -110,6 +102,55 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                     Publishings.save($scope.publishing, function( publishing ){
                         console.log(publishing);
                         $location.path('editoras');
+                    });
+                }
+            };
+    }]).
+    controller('PersonController', ['$scope','Person','$rootScope','$routeParams','$location',
+        function($scope, Person, $rootScope, $routeParams, $location){
+            $scope.person = {};
+            $scope.titlePage = 'Cadastrar Nova Pessoa';
+
+            $rootScope.breadCrumbs = [
+                {text: 'Home', link: '#/home', active: false},
+                {text: 'Pessoas', link: '', active: true}
+            ];
+
+            if ($routeParams.personId) {
+                $scope.titlePage = 'Editando Pessoa';
+                $scope.person = Person.get({idPerson: $routeParams.personId}, function () {
+                    $rootScope.breadCrumbs = [
+                        {text: 'Home', link: '#/home', active: false},
+                        {text: 'Pessoas', link: '#/pessoas', active: false},
+                        {text: $scope.person.nome, link: '', active: true}
+                    ];
+                });
+            }
+
+            $scope.people = Person.query();
+
+            $scope.edit = function(idPessoa){
+                $location.path('/pessoas/' + idPessoa);
+            };
+
+            $scope.delete = function(idPessoa){
+                if(confirm('Deseja Excluir essa Pessoa?')){
+                    Person.delete({_id: idPessoa}, function(){
+                        $scope.people = Publishings.query();
+                    });
+                }
+            };
+
+            $scope.salvar = function(){
+                if($scope.person._id){
+                    Person.update($scope.person, function( person ){
+                        console.log(person);
+                        $location.path('pessoas');
+                    });
+                } else {
+                    Person.save($scope.person, function( person ){
+                        console.log(person);
+                        $location.path('pessoas');
                     });
                 }
             };
