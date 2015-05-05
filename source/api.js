@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var db = mongoose.connection;
 var app = express();
+var Schema = mongoose.Schema, ObjectId = Schema.ObjectId;
 
 mongoose.connect('mongodb://localhost/loan');
 db.on('error', console.error.bind(console, 'connection erro: '));
@@ -39,9 +40,25 @@ var personSchema = mongoose.Schema({
     telefone: String
 });
 
+/**
+ * Esquema de Livros
+ */
+
+var bookSchema = mongoose.Schema({
+    nome: String,
+    authors: [{type: ObjectId, ref: 'Autor'}],
+    publishing: {type: ObjectId, ref: 'Publishing'}
+});
+
+
+/**
+ * Contrução dos Models da Aplicação
+ * TODO: verificar melhor maneira de separar os arquivos, e onde fazer os includes.
+ */
 var AutorsModel = mongoose.model('Autor', autorSchema);
 var PublishingModel = mongoose.model('Publishing', publishingSchema);
 var PersonModel = mongoose.model('Person',personSchema );
+var BookModel = mongoose.model('Book', bookSchema);
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -128,7 +145,6 @@ app.post('/publishing', function(req, res){
 app.get('/publishing/:idEditora', function (req, res){
     if(req.param('idEditora') == 'all'){
         PublishingModel.find(function(err, publishing){
-            console.log(publishing);
             if(err) return console.log(err);
             res.json(publishing);
         });
@@ -180,7 +196,6 @@ app.post('/person', function(req, res){
 app.get('/person/:idPerson', function (req, res){
     if(req.param('idPerson') == 'all'){
         PersonModel.find(function(err, person){
-            console.log(person);
             if(err) return console.log(err);
             res.json(person);
         });
@@ -197,6 +212,56 @@ app.delete('/person', function(req, res){
         if(err) return console.log(err);
         if(person) res.json(person);
         res.json({erro: true, msg: 'Mensagem: Erro ao apagar Pessoa'});
+    });
+});
+
+/**
+ * API com resposta dos Livros
+ */
+
+app.put('/book', function(req, res){
+    BookModel.findOneAndUpdate({_id: req.body._id}, {nome: req.body.nome, authors:  req.body.authors, publishing: req.body.publishing},
+        {},
+        function(err, book){
+            if(err) return console.log(err);
+            if(book) res.json(book);
+
+            res.json({erro: true, msg: 'Mensagem: Erro ao editar Livros'});
+        });
+});
+
+app.post('/book', function(req, res){
+    var book = new BookModel({
+        nome: req.body.nome,
+        authors:  req.body.authors,
+        publishing: req.body.publishing
+    });
+
+    book.save(function(err, book){
+        if(err) return console.log(err);
+        res.json(book);
+    });
+});
+
+app.get('/book/:idBook', function (req, res){
+    if(req.param('idBook') == 'all'){
+        BookModel.find().populate('authors', 'nome').populate('publishing', 'nome').exec(function(err, book){
+            if(err) return console.log(err);
+            res.json(book);
+        });
+    } else {
+        BookModel.findOne({_id:  req.param('idBook')}, function(err, book){
+            if(err) return console.log(err);
+            res.json(book);
+        });
+    }
+});
+
+app.delete('/book', function(req, res){
+    BookModel.findByIdAndRemove(req.query._id, function(err, book){
+        if(err) return console.log(err);
+        if(book) res.json(book);
+        res.json({erro: true, msg: 'Mensagem: Erro ao apagar Livro'});
     });
 });
 

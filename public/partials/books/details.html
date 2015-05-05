@@ -6,6 +6,12 @@
     <div class="col-md-12">
         <form class="form-inline" name="formNovoLivro">
             <input type="text" placeholder="Nome do Livro"  ng-model="book.nome"  class="form-control" required="" />
+            <select ng-model="book.authors" class="form-control" ng-options="autor._id as autor.nome for autor in autors" multiple>
+            </select>
+
+            <select ng-model="book.publishing" class="form-control" ng-options="publish._id as publish.nome for publish in publishings" >
+                <option value="">Selecione uma Editora</option>
+            </select>
             <button ng-click="salvar()" class="btn btn-primary">Salvar</button>
         </form>
     </div>

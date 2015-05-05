@@ -11,12 +11,21 @@
                         <tr>
                             <th>#</th>
                             <th>Nome</th>
+                            <th>Autor(es)</th>
+                            <th>Editora</th>
+                            <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="book in books">
                             <td>{{book._id}}</td>
                             <td>{{book.nome}}</td>
+                            <td>
+                                <ul>
+                                    <li ng-repeat="author in book.authors">{{author.nome}}</li>
+                                </ul>
+                            </td>
+                            <td>{{book.publishing.nome}}</td>
                             <td>
                                 <a ng-click="edit(book._id)" class="btn btn-primary btn-small"><i class="fa fa-edit"></i></a>
                                 <a ng-click="delete(book._id)" class="btn btn-danger btn-small"><i class="fa fa-times"></i></a>

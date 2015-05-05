@@ -149,11 +149,53 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                 }
             };
     }]).
-    controller('BookController',['$scope','Book','$rootScope','$routeParams','$location',
-        function($scope, Book, $rootScope, $routeParams, $location){
+    controller('BookController',['$scope','Book','$rootScope','$routeParams','$location','Authors','Publishings',
+        function($scope, Book, $rootScope, $routeParams, $location, Authors, Publishings){
             $scope.book = {};
             $scope.titlePage = 'Cadastrar novo Livro';
 
+            $rootScope.breadCrumbs = [
+                {text: 'Home', link: '#/home', active: false},
+                {text: 'Livros', link: '', active: true}
+            ];
 
+            if ($routeParams.bookId) {
+                $scope.titlePage = 'Editando um Livro';
+                $scope.book = Book.get({idBook: $routeParams.bookId}, function () {
+                    $rootScope.breadCrumbs = [
+                        {text: 'Home', link: '#/home', active: false},
+                        {text: 'Livros', link: '#/livros', active: false},
+                        {text: $scope.book.nome, link: '', active: true}
+                    ];
+                });
+            }
 
+            $scope.books = Book.query();
+
+            $scope.edit = function(idBook){
+                $location.path('/livros/' + idBook);
+            };
+
+            $scope.delete = function(idBook){
+                if(confirm('Deseja Excluir esse Livro?')){
+                    Book.delete({_id: idBook}, function(){
+                        $scope.books = Book.query();
+                    });
+                }
+            };
+
+            $scope.salvar = function(){
+                if($scope.book._id){
+                    Book.update($scope.book, function(){
+                        $location.path('livros');
+                    });
+                } else {
+                    Book.save($scope.book, function(){
+                        $location.path('livros');
+                    });
+                }
+            };
+
+            $scope.autors = Authors.query();
+            $scope.publishings = Publishings.query();
     }]);
