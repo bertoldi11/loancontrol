@@ -2,10 +2,10 @@
 
 /* Controllers */
 
-var loanControlControllers = angular.module('loanControlControllers', []).
+var loanControlControllers = angular.module('loanControlControllers', ['ui.bootstrap']).
     controller('HomeController', ['$scope', '$rootScope', function($scope, $rootScope){
         $rootScope.breadCrumbs = [
-            {text: 'Home', link: '/home', active: true}
+            {text: 'Home', link: '#/home', active: true}
         ];
     }]).
     controller('AutorsController', ['$scope','Authors', '$location','$routeParams','$rootScope',
@@ -149,8 +149,8 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                 }
             };
     }]).
-    controller('BookController',['$scope','Book','$rootScope','$routeParams','$location','Authors','Publishings',
-        function($scope, Book, $rootScope, $routeParams, $location, Authors, Publishings){
+    controller('BookController',['$scope','Book','$rootScope','$routeParams','$location','Authors','Publishings','$modal','Person',
+        function($scope, Book, $rootScope, $routeParams, $location, Authors, Publishings, $modal, Person){
             $scope.book = {};
             $scope.titlePage = 'Cadastrar novo Livro';
 
@@ -210,4 +210,43 @@ var loanControlControllers = angular.module('loanControlControllers', []).
 
             $scope.autors = Authors.query();
             $scope.publishings = Publishings.query();
+
+            $scope.animationsEnabled = true;
+            $scope.openModal = function (idBook) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    resolve: {
+                        people: function () {
+                            return Person.query();
+                        },
+                        idBook: function(){
+                            return idBook;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function(){
+                    $scope.books = Book.query();
+                })
+            };
+    }]).
+    controller('ModalInstanceCtrl', ['$scope','$modalInstance','people', 'idBook','Book',function ($scope, $modalInstance, people, idBook, Book) {
+        $scope.tituloModel = 'Emprestar o Livro';
+        $scope.people = people;
+        $scope.book = Book.get({idBook: idBook});
+
+        $scope.loan = function (idPerson) {
+            Book.loan({emprestado: true, idPerson: idPerson},{idBook: idBook}, function(loan){
+                console.log(loan);
+                $modalInstance.close();
+            });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
+
     }]);
