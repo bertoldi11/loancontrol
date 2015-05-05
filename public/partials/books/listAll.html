@@ -1,4 +1,15 @@
-<h1>Listagem dos Livros</h1>
+<div class="row">
+    <div class="col-md-8">
+        <h1>Listagem dos Livros</h1>
+    </div>
+    <div class="col-md-4">
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="Busca" ng-model="busca">
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -13,11 +24,12 @@
                             <th>Nome</th>
                             <th>Autor(es)</th>
                             <th>Editora</th>
+                            <th>Emprestado</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="book in books">
+                        <tr ng-repeat="book in books | filter: busca">
                             <td>{{book._id}}</td>
                             <td>{{book.nome}}</td>
                             <td>
@@ -26,7 +38,10 @@
                                 </ul>
                             </td>
                             <td>{{book.publishing.nome}}</td>
+                            <td><span ng-if="book.emprestado">Sim</span></td>
                             <td>
+                                <a ng-if="!book.emprestado" ng-click="loan(book._id)" class="btn btn-default btn-small"><i class="fa fa-book"></i></a>
+                                <a ng-if="book.emprestado" ng-click="return(book._id)" class="btn btn-default btn-small"><i class="fa fa-angle-double-left"></i></a>
                                 <a ng-click="edit(book._id)" class="btn btn-primary btn-small"><i class="fa fa-edit"></i></a>
                                 <a ng-click="delete(book._id)" class="btn btn-danger btn-small"><i class="fa fa-times"></i></a>
                             </td>

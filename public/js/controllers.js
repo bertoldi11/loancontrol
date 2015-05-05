@@ -196,6 +196,18 @@ var loanControlControllers = angular.module('loanControlControllers', []).
                 }
             };
 
+            $scope.loan = function(idBook){
+                Book.loan({emprestado: true},{idBook: idBook},function(){
+                    $scope.books = Book.query();
+                });
+            };
+
+            $scope.return = function(idBook){
+                Book.return({emprestado: false}, {idBook: idBook}, function(){
+                    $scope.books = Book.query();
+                });
+            }
+
             $scope.autors = Authors.query();
             $scope.publishings = Publishings.query();
     }]);

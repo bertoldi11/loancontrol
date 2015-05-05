@@ -28,6 +28,8 @@ var loanControlService = angular.module('loanControlService', ['ngResource']).
         function($resource){
             return $resource('http://192.168.56.100:3000/book/:idBook', {}, {
                 update: {method: 'PUT'},
-                query: {method: 'GET', params: {'idBook': 'all'}, isArray: true}
+                query: {method: 'GET', params: {'idBook': 'all'}, isArray: true},
+                loan:{method: 'PATCH', params: {'idBook': '@idBook'}},
+                return:{method: 'PATCH', params: {'idBook': '@idBook'}}
             });
     }]);

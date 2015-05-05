@@ -46,6 +46,7 @@ var personSchema = mongoose.Schema({
 
 var bookSchema = mongoose.Schema({
     nome: String,
+    emprestado: {type: Boolean, default: false},
     authors: [{type: ObjectId, ref: 'Autor'}],
     publishing: {type: ObjectId, ref: 'Publishing'}
 });
@@ -263,6 +264,19 @@ app.delete('/book', function(req, res){
         if(book) res.json(book);
         res.json({erro: true, msg: 'Mensagem: Erro ao apagar Livro'});
     });
+});
+
+app.patch('/book/:idBook', function(req, res){
+    if(req.param('idBook')){
+        if(undefined != typeof req.param('emprestado')){
+            console.log(req.param('emprestado'));
+            BookModel.findOneAndUpdate({_id: req.param('idBook')}, {emprestado: req.param('emprestado')}, function(err, book){
+                if(err) return console.log(err);
+                if(book) res.json(book);
+                res.json({erro: true, msg: 'Erro ao emprestar Livro'});
+            });
+        }
+    }
 });
 
 app.listen(process.env.PORT || 3000);
