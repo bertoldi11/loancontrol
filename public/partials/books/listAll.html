@@ -21,8 +21,8 @@
                             <td>{{book._id}}</td>
                             <td>{{book.nome}}</td>
                             <td>
-                                <ul>
-                                    <li ng-repeat="author in book.authors">{{author.nome}}</li>
+                                <ul class="fa-ul">
+                                    <li class="fa fa-angle-double-right" style="display: block"  ng-repeat="author in book.authors">{{author.nome}}</li>
                                 </ul>
                             </td>
                             <td>{{book.publishing.nome}}</td>
