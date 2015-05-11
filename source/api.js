@@ -293,7 +293,13 @@ app.patch('/book/:idBook', function(req, res){
                             res.json({'msg': 'Erro ao Emprestar Livro (loan)'});
                         });
                     } else {
-                        res.json({'msg': 'Devolver Livro'});
+                        returnDate = new Date();
+                        console.log(returnDate);
+                        LoanModel.findOneAndUpdate({book: req.param('idBook'), dateReturn: {$exists: false} }, {dateReturn: new Date()}, function(err, loan){
+                            if(err) return console.log(err);
+                            if(loan) res.json(loan);
+                            res.json({'msg': 'Erro ao Emprestar Livro (loan)'});
+                        })
                     }
                 } else {
                     res.json({erro: true, msg: 'Erro ao emprestar Livro'});
